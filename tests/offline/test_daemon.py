@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import multiprocessing as mp
 import os
 import subprocess

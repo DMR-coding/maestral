@@ -4,33 +4,38 @@ This module defines functions to start and stop the sync daemon and retrieve pro
 objects for a running daemon.
 """
 
-import sys
-import os
-import time
-import signal
-import traceback
 import enum
-import subprocess
-from shlex import quote
-import threading
 import fcntl
-import struct
-import tempfile
 import logging
+import os
+import signal
+import struct
+import subprocess
+import sys
+import tempfile
+import threading
+import time
+import traceback
 import warnings
-from typing import Optional, Any, Union, Tuple, Dict, Iterable, Type, TYPE_CHECKING
-from types import TracebackType, FrameType
+from shlex import quote
+from types import FrameType, TracebackType
+from typing import TYPE_CHECKING, Any, Dict, Iterable, Optional, Tuple, Type, Union
 
 import Pyro5  # type: ignore
-from Pyro5.errors import CommunicationError  # type: ignore
-from Pyro5.api import Daemon, Proxy, expose, oneway, register_dict_to_class  # type: ignore
 import sdnotify  # type: ignore
 from fasteners import InterProcessLock  # type: ignore
+from Pyro5.api import (  # type: ignore
+    Daemon,
+    Proxy,
+    expose,
+    oneway,
+    register_dict_to_class,
+)
+from Pyro5.errors import CommunicationError  # type: ignore
 
-from .errors import SYNC_ERRORS, FATAL_ERRORS, MaestralApiError
-from .constants import IS_MACOS, FROZEN
+from .constants import FROZEN, IS_MACOS
+from .errors import FATAL_ERRORS, SYNC_ERRORS, MaestralApiError
 from .utils.appdirs import get_runtime_path
-
 
 if TYPE_CHECKING:
     from .main import Maestral
@@ -381,6 +386,7 @@ def start_maestral_daemon(
     """
 
     import asyncio
+
     from .main import Maestral
 
     if threading.current_thread() is not threading.main_thread():

@@ -11,8 +11,7 @@ from typing import Dict
 
 from .. import __version__
 from .base import get_conf_path, get_data_path
-from .user import UserConfig, DefaultsType
-
+from .user import DefaultsType, UserConfig
 
 logger = logging.getLogger(__name__)
 CONFIG_DIR_NAME = "maestral"

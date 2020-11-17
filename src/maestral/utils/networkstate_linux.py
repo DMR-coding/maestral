@@ -11,7 +11,6 @@ from dbus_next.aio import MessageBus, ProxyInterface  # type: ignore
 
 from .networkstate_base import NetworkConnectionNotifierBase
 
-
 logger = logging.getLogger(__name__)
 
 NM_CONNECTIVITY_FULL = 4

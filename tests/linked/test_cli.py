@@ -1,12 +1,13 @@
 import os
-import unittest
 import subprocess
+import unittest
 from unittest import TestCase
 
 import Pyro5.errors
+
 from maestral.daemon import MaestralProxy
 
-from .fixtures import setup_test_config, cleanup_test_config, DropboxTestLock
+from .fixtures import DropboxTestLock, cleanup_test_config, setup_test_config
 
 
 @unittest.skipUnless(os.environ.get("DROPBOX_TOKEN"), "Requires auth token")

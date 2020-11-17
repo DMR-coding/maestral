@@ -5,7 +5,7 @@ must inherit from :class:`DesktopNotifierBase`.
 """
 
 from enum import Enum
-from typing import Optional, Dict, Callable, Union
+from typing import Callable, Dict, Optional, Union
 
 
 class NotificationLevel(Enum):

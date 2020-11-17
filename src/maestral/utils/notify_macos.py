@@ -13,20 +13,19 @@ Notification backend for macOS. Includes three implementations, in order of pref
 The first two implementations require a running CFRunLoop to invoke callbacks.
 """
 
-import uuid
-import platform
-import subprocess
-import shutil
 import logging
-from typing import Type, Optional, Dict, Tuple
+import platform
+import shutil
+import subprocess
+import uuid
+from typing import Dict, Optional, Tuple, Type
 
 from packaging.version import Version
 from rubicon.objc import ObjCClass, objc_method, py_from_ns  # type: ignore
 from rubicon.objc.runtime import load_library, objc_id  # type: ignore
 
-from .notify_base import Notification, DesktopNotifierBase
 from ..constants import FROZEN
-
+from .notify_base import DesktopNotifierBase, Notification
 
 logger = logging.getLogger(__name__)
 

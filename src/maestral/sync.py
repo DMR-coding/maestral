@@ -1,122 +1,132 @@
 # -*- coding: utf-8 -*-
 """This module contains the main syncing functionality."""
 
+import enum
+import gc
+import logging
 import os
 import os.path as osp
-from stat import S_ISDIR
-import resource
-import logging
-import time
-import tempfile
-import random
-import uuid
-from threading import Thread, Event, RLock, current_thread
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from queue import Queue, Empty
-from collections import abc
-from contextlib import contextmanager
-import enum
 import pprint
-import gc
+import random
+import resource
+import tempfile
+import time
+import uuid
+from collections import abc
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from contextlib import contextmanager
 from datetime import timezone
 from functools import wraps
-from typing import (
-    Optional,
-    Any,
-    Set,
-    List,
-    Dict,
-    Tuple,
-    Union,
-    Iterator,
-    Callable,
-    Hashable,
-    Type,
-    cast,
-    TypeVar,
-)
+from queue import Empty, Queue
+from stat import S_ISDIR
+from threading import Event, RLock, Thread, current_thread
 from types import TracebackType
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Hashable,
+    Iterator,
+    List,
+    Optional,
+    Set,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
+    cast,
+)
 
 import click
-import sqlalchemy.exc  # type: ignore
+import dropbox  # type: ignore
+import pathspec  # type: ignore
 import sqlalchemy.engine.url  # type: ignore
-from sqlalchemy.sql import func  # type: ignore
+import sqlalchemy.exc  # type: ignore
+from dropbox.files import (  # type: ignore
+    DeletedMetadata,
+    FileMetadata,
+    FolderMetadata,
+    Metadata,
+)
+from sqlalchemy import (  # type: ignore
+    Column,
+    Enum,
+    Float,
+    Integer,
+    MetaData,
+    String,
+    create_engine,
+)
 from sqlalchemy.ext.declarative import declarative_base  # type: ignore
+from sqlalchemy.ext.hybrid import hybrid_property  # type: ignore
 from sqlalchemy.orm import sessionmaker  # type: ignore
 from sqlalchemy.sql import case  # type: ignore
+from sqlalchemy.sql import func  # type: ignore
 from sqlalchemy.sql.elements import Case  # type: ignore
-from sqlalchemy.ext.hybrid import hybrid_property  # type: ignore
-from sqlalchemy import MetaData, Column, Integer, String, Enum, Float, create_engine  # type: ignore
-import pathspec  # type: ignore
-import dropbox  # type: ignore
-from dropbox.files import Metadata, DeletedMetadata, FileMetadata, FolderMetadata  # type: ignore
 from watchdog.events import FileSystemEventHandler  # type: ignore
 from watchdog.events import (
     EVENT_TYPE_CREATED,
     EVENT_TYPE_DELETED,
-    EVENT_TYPE_MOVED,
     EVENT_TYPE_MODIFIED,
-)
-from watchdog.events import (
-    DirModifiedEvent,
-    FileModifiedEvent,
+    EVENT_TYPE_MOVED,
     DirCreatedEvent,
-    FileCreatedEvent,
     DirDeletedEvent,
-    FileDeletedEvent,
+    DirModifiedEvent,
     DirMovedEvent,
+    FileCreatedEvent,
+    FileDeletedEvent,
+    FileModifiedEvent,
     FileMovedEvent,
     FileSystemEvent,
 )
 from watchdog.utils.dirsnapshot import DirectorySnapshot  # type: ignore
 
+from .client import (
+    DropboxClient,
+    convert_api_errors,
+    fswatch_to_maestral_error,
+    os_to_maestral_error,
+)
 from .config import MaestralConfig, MaestralState
-from .fsevents import Observer
 from .constants import (
+    DISCONNECTED,
+    EXCLUDED_DIR_NAMES,
+    EXCLUDED_FILE_NAMES,
+    FILE_CACHE,
     IDLE,
-    SYNCING,
+    MIGNORE_FILE,
     PAUSED,
     STOPPED,
-    DISCONNECTED,
-    EXCLUDED_FILE_NAMES,
-    EXCLUDED_DIR_NAMES,
-    MIGNORE_FILE,
-    FILE_CACHE,
+    SYNCING,
 )
 from .errors import (
-    SyncError,
-    NoDropboxDirError,
     CacheDirError,
-    PathError,
-    NotFoundError,
+    DatabaseError,
     DropboxServerError,
     FileConflictError,
     FolderConflictError,
     InvalidDbidError,
-    DatabaseError,
+    NoDropboxDirError,
+    NotFoundError,
+    PathError,
+    SyncError,
 )
-from .client import (
-    DropboxClient,
-    os_to_maestral_error,
-    convert_api_errors,
-    fswatch_to_maestral_error,
-)
+from .fsevents import Observer
 from .utils import removeprefix
+from .utils.appdirs import get_data_path, get_home_dir
 from .utils.caches import LRUCache
+from .utils.networkstate import NetworkConnectionNotifier
 from .utils.notify import MaestralDesktopNotifier
 from .utils.path import (
-    generate_cc_name,
     cased_path_candidates,
-    is_fs_case_sensitive,
-    move,
+    content_hash,
     delete,
+    generate_cc_name,
     is_child,
     is_equal_or_child,
-    content_hash,
+    is_fs_case_sensitive,
+    move,
 )
-from .utils.appdirs import get_data_path, get_home_dir
-from .utils.networkstate import NetworkConnectionNotifier
-
 
 logger = logging.getLogger(__name__)
 _cpu_count = os.cpu_count() or 1  # os.cpu_count can return None
@@ -523,8 +533,9 @@ class SyncEvent(Base):  # type: ignore
     @change_time_or_sync_time.expression  # type: ignore
     def change_time_or_sync_time(cls) -> Case:
         return case(
-            [(cls.change_time != None, cls.change_time)], else_=cls.sync_time
-        )  # noqa: E711
+            [(cls.change_time != None, cls.change_time)],  # noqa: E711
+            else_=cls.sync_time,
+        )
 
     @property
     def is_file(self) -> bool:

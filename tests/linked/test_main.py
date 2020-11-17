@@ -12,11 +12,11 @@ import unittest
 from unittest import TestCase
 
 from maestral.errors import NotFoundError, PathError
-from maestral.main import FileStatus, IDLE
+from maestral.main import IDLE, FileStatus
 from maestral.main import logger as maestral_logger
 from maestral.utils.path import delete
 
-from .fixtures import setup_test_config, cleanup_test_config, DropboxTestLock
+from .fixtures import DropboxTestLock, cleanup_test_config, setup_test_config
 
 
 @unittest.skipUnless(os.environ.get("DROPBOX_TOKEN"), "Requires auth token")

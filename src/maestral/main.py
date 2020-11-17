@@ -1,31 +1,31 @@
 # -*- coding: utf-8 -*-
 """This module defines the main API which is exposed to the CLI or GUI."""
 
-import sys
+import asyncio
+import logging.handlers
 import os
 import os.path as osp
 import platform
-import shutil
-import time
-import logging.handlers
-from collections import deque
-import asyncio
 import random
-from concurrent.futures import ThreadPoolExecutor, Future, wait
-from typing import Union, List, Iterator, Dict, Set, Deque, Awaitable, Optional, Any
+import shutil
+import sys
+import time
+from collections import deque
+from concurrent.futures import Future, ThreadPoolExecutor, wait
+from typing import Any, Awaitable, Deque, Dict, Iterator, List, Optional, Set, Union
 
 try:
     from concurrent.futures import InvalidStateError  # type: ignore
 except ImportError:
     # Python 3.7 and lower
-    InvalidStateError = RuntimeError
+    InvalidStateError = RuntimeError  # type: ignore
 
-import requests
-from watchdog.events import DirDeletedEvent, FileDeletedEvent  # type: ignore
 import bugsnag  # type: ignore
+import requests
+import sdnotify  # type: ignore
 from bugsnag.handlers import BugsnagHandler  # type: ignore
 from packaging.version import Version
-import sdnotify  # type: ignore
+from watchdog.events import DirDeletedEvent, FileDeletedEvent  # type: ignore
 
 try:
     from systemd import journal  # type: ignore
@@ -34,39 +34,28 @@ except ImportError:
 
 from . import __version__
 from .client import DropboxClient, convert_api_errors
-from .sync import SyncMonitor, SyncDirection
+from .config import MaestralConfig, MaestralState
+from .constants import BUGSNAG_API_KEY, GITHUB_RELEASES_API, IDLE, FileStatus
 from .errors import (
     MaestralApiError,
-    NotLinkedError,
     NoDropboxDirError,
     NotFoundError,
+    NotLinkedError,
     PathError,
 )
-from .config import MaestralConfig, MaestralState
+from .sync import SyncDirection, SyncMonitor
 from .utils import get_newer_version
+from .utils.appdirs import get_cache_path, get_data_path, get_log_path
 from .utils.housekeeping import validate_config_name
-from .utils.path import (
-    is_child,
-    is_equal_or_child,
-    to_existing_cased_path,
-    delete,
-)
 from .utils.notify import MaestralDesktopNotificationHandler
+from .utils.path import delete, is_child, is_equal_or_child, to_existing_cased_path
 from .utils.serializer import (
-    error_to_dict,
-    dropbox_stone_to_dict,
-    sync_event_to_dict,
-    StoneType,
     ErrorType,
+    StoneType,
+    dropbox_stone_to_dict,
+    error_to_dict,
+    sync_event_to_dict,
 )
-from .utils.appdirs import get_log_path, get_cache_path, get_data_path
-from .constants import (
-    BUGSNAG_API_KEY,
-    IDLE,
-    FileStatus,
-    GITHUB_RELEASES_API,
-)
-
 
 logger = logging.getLogger(__name__)
 sd_notifier = sdnotify.SystemdNotifier()
@@ -1424,8 +1413,9 @@ class Maestral:
         from alembic.migration import MigrationContext  # type: ignore
         from alembic.operations import Operations  # type: ignore
         from sqlalchemy.engine import reflection  # type: ignore
-        from .sync import db_naming_convention as nc
+
         from .sync import IndexEntry
+        from .sync import db_naming_convention as nc
 
         table_name = IndexEntry.__tablename__
 

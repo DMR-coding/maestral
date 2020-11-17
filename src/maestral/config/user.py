@@ -10,16 +10,15 @@ config module of the Spyder IDE.
 """
 
 import ast
+import configparser as cp
+import logging
 import os
 import os.path as osp
 import re
 import shutil
 import time
-import configparser as cp
 from threading import RLock
-import logging
-from typing import Optional, List, Tuple, Dict, Union, Any
-
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 logger = logging.getLogger(__name__)
 

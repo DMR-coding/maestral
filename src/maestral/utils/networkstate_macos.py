@@ -21,20 +21,19 @@ with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
 
 from ctypes import (
-    POINTER,
     CFUNCTYPE,
+    POINTER,
     Structure,
-    pointer,
     c_bool,
     c_long,
-    c_void_p,
     c_uint32,
+    c_void_p,
+    pointer,
 )
 
 from rubicon.objc.runtime import load_library  # type: ignore
 
 from .networkstate_base import NetworkConnectionNotifierBase
-
 
 libsc = load_library("SystemConfiguration")
 libcf = load_library("CoreFoundation")

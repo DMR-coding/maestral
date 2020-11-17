@@ -1,28 +1,28 @@
-import sys
-import os
-import time
-import subprocess
-import threading
 import multiprocessing as mp
+import os
+import subprocess
+import sys
+import threading
+import time
 import uuid
 
 import pytest
 
+from maestral.config import list_configs
 from maestral.daemon import (
+    IS_MACOS,
     CommunicationError,
-    Proxy,
+    Lock,
     MaestralProxy,
+    Proxy,
+    Start,
+    Stop,
     start_maestral_daemon,
     start_maestral_daemon_process,
     stop_maestral_daemon_process,
-    Start,
-    Stop,
-    Lock,
-    IS_MACOS,
 )
-from maestral.main import Maestral
 from maestral.errors import NotLinkedError
-from maestral.config import list_configs
+from maestral.main import Maestral
 from maestral.utils.housekeeping import remove_configuration
 
 
@@ -88,8 +88,8 @@ def test_locking_threaded():
     # acquire lock from thread
 
     def acquire_in_thread():
-        l = Lock.singleton(lock_name)
-        l.acquire()
+        lock_thread = Lock.singleton(lock_name)
+        lock_thread.acquire()
 
     t = threading.Thread(
         target=acquire_in_thread,

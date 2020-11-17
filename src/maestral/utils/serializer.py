@@ -7,13 +7,12 @@ the daemon and frontends.
 import json
 import traceback
 from enum import Enum
-from typing import Dict, Union, Any, Sequence
+from typing import Any, Dict, Sequence, Union
 
 from dropbox.stone_serializers import json_encode  # type: ignore
 from dropbox.stone_validators import Struct  # type: ignore
 
 from ..sync import SyncEvent
-
 
 StoneType = Dict[str, Union[str, float, bool, None]]
 ErrorType = Dict[str, Union[str, Sequence[str], None]]

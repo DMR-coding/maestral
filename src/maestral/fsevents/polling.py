@@ -17,19 +17,19 @@
 # limitations under the License.
 
 from watchdog.observers.polling import (  # type: ignore
-    PollingEmitter,
-    PollingObserver,
+    DEFAULT_OBSERVER_TIMEOUT,
+    BaseObserver,
+    DirCreatedEvent,
+    DirDeletedEvent,
     DirectorySnapshotDiff,
+    DirModifiedEvent,
+    DirMovedEvent,
+    FileCreatedEvent,
     FileDeletedEvent,
     FileModifiedEvent,
     FileMovedEvent,
-    FileCreatedEvent,
-    DirDeletedEvent,
-    DirModifiedEvent,
-    DirMovedEvent,
-    DirCreatedEvent,
-    DEFAULT_OBSERVER_TIMEOUT,
-    BaseObserver,
+    PollingEmitter,
+    PollingObserver,
 )
 
 

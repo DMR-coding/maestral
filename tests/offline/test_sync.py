@@ -7,23 +7,29 @@
 """
 import os
 import os.path as osp
+import timeit
 from pathlib import Path
 from threading import Event
-import timeit
 from unittest import TestCase
 
 from maestral.sync import (
+    ChangeType,
+    DirCreatedEvent,
+    DirDeletedEvent,
+    DirMovedEvent,
+    DropboxClient,
     FileCreatedEvent,
     FileDeletedEvent,
     FileModifiedEvent,
     FileMovedEvent,
-    DirCreatedEvent,
-    DirDeletedEvent,
-    DirMovedEvent,
+    FSEventHandler,
+    ItemType,
+    Observer,
+    SyncDirection,
+    SyncEngine,
+    delete,
+    move,
 )
-from maestral.sync import delete, move
-from maestral.sync import SyncEngine, DropboxClient, Observer, FSEventHandler
-from maestral.sync import SyncDirection, ItemType, ChangeType
 from maestral.utils.appdirs import get_home_dir
 from maestral.utils.housekeeping import remove_configuration
 

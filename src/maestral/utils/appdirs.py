@@ -9,13 +9,7 @@ import os.path as osp
 import platform
 from typing import Optional
 
-from ..config.base import (
-    get_home_dir,
-    get_conf_path,
-    get_data_path,
-    to_full_path,
-)
-
+from ..config.base import get_conf_path, get_data_path, get_home_dir, to_full_path
 
 __all__ = [
     "get_home_dir",

@@ -4,26 +4,25 @@ This module is responsible for authorization and token store in the system keyri
 """
 
 import logging
+from datetime import datetime
 from threading import RLock
 from typing import Optional
-from datetime import datetime
 
 import click
 import keyring.backends  # type: ignore
+import keyring.backends.kwallet  # type: ignore
 import keyring.backends.OS_X  # type: ignore
 import keyring.backends.SecretService  # type: ignore
-import keyring.backends.kwallet  # type: ignore
-from keyring.backend import KeyringBackend  # type: ignore
-from keyring.core import load_keyring  # type: ignore
-from keyring.errors import KeyringLocked, PasswordDeleteError  # type: ignore
 import keyrings.alt.file  # type: ignore
 import requests
 from dropbox.oauth import DropboxOAuth2FlowNoRedirect  # type: ignore
+from keyring.backend import KeyringBackend  # type: ignore
+from keyring.core import load_keyring  # type: ignore
+from keyring.errors import KeyringLocked, PasswordDeleteError  # type: ignore
 
 from .config import MaestralConfig, MaestralState
 from .constants import DROPBOX_APP_KEY
 from .errors import KeyringAccessError
-
 
 logger = logging.getLogger(__name__)
 

@@ -7,13 +7,12 @@ event loop.
 
 import asyncio
 import logging
-from typing import Optional, Type, Coroutine
+from typing import Coroutine, Optional, Type
 
 from dbus_next import Variant  # type: ignore
 from dbus_next.aio import MessageBus, ProxyInterface  # type: ignore
 
-from .notify_base import Notification, DesktopNotifierBase, NotificationLevel
-
+from .notify_base import DesktopNotifierBase, Notification, NotificationLevel
 
 logger = logging.getLogger(__name__)
 

@@ -17,19 +17,19 @@
 # limitations under the License.
 
 from watchdog.observers.fsevents import (  # type: ignore
-    FSEventsEmitter,
-    FSEventsObserver,
+    DEFAULT_OBSERVER_TIMEOUT,
+    BaseObserver,
+    DirCreatedEvent,
+    DirDeletedEvent,
     DirectorySnapshot,
+    DirModifiedEvent,
+    DirMovedEvent,
+    FileCreatedEvent,
     FileDeletedEvent,
     FileModifiedEvent,
     FileMovedEvent,
-    FileCreatedEvent,
-    DirDeletedEvent,
-    DirModifiedEvent,
-    DirMovedEvent,
-    DirCreatedEvent,
-    DEFAULT_OBSERVER_TIMEOUT,
-    BaseObserver,
+    FSEventsEmitter,
+    FSEventsObserver,
 )
 
 

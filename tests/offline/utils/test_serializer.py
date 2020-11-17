@@ -13,7 +13,6 @@ from requests.exceptions import RequestException
 from maestral.errors import SyncError
 from maestral.utils.serializer import error_to_dict
 
-
 default_keys = ("type", "inherits", "traceback", "title", "message")
 builtin_types = dir(builtins) + [type(None).__name__]
 

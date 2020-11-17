@@ -5,11 +5,10 @@ defined here instead of the :mod:`utils.appdirs` module to avoid imports from ou
 config module.
 """
 
-import platform
 import os
 import os.path as osp
-from typing import Optional, List
-
+import platform
+from typing import List, Optional
 
 __all__ = ["get_conf_path", "get_data_path", "get_home_dir"]
 

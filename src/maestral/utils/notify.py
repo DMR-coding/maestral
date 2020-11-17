@@ -4,16 +4,15 @@ This module handles desktop notifications for Maestral and supports multiple bac
 depending on the platform.
 """
 
-import time
-import platform
 import logging
+import platform
+import time
 from threading import Lock
-from typing import Optional, Dict, ClassVar, Callable
+from typing import Callable, ClassVar, Dict, Optional
 
 from ..config import MaestralConfig
-from ..constants import APP_NAME, BUNDLE_ID, APP_ICON_PATH
-from .notify_base import DesktopNotifierBase, NotificationLevel, Notification
-
+from ..constants import APP_ICON_PATH, APP_NAME, BUNDLE_ID
+from .notify_base import DesktopNotifierBase, Notification, NotificationLevel
 
 __all__ = [
     "DesktopNotifier",

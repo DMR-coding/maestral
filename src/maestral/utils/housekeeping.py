@@ -8,7 +8,6 @@ from ..config import MaestralConfig, MaestralState
 from ..utils.appdirs import get_data_path, get_log_path
 from ..utils.path import delete
 
-
 _C = TypeVar("_C", bound=str)
 
 

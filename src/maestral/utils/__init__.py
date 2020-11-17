@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from packaging.version import Version
-from typing import List, Iterator, TypeVar, Optional, Iterable
+from typing import Iterable, Iterator, List, Optional, TypeVar
 
+from packaging.version import Version
 
 _N = TypeVar("_N", float, int)
 

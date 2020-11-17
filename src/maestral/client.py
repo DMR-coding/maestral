@@ -4,72 +4,72 @@ This modules contains the Dropbox API client. It wraps calls to the Dropbox Pyth
 and handles exceptions, chunked uploads or downloads, etc.
 """
 
+import contextlib
 import errno
+import functools
+import logging
 import os
 import os.path as osp
 import time
-import logging
-import functools
-import contextlib
 from datetime import datetime, timezone
 from typing import (
-    Callable,
-    Union,
-    Any,
-    Type,
-    Tuple,
-    List,
-    Iterator,
-    TypeVar,
-    Optional,
     TYPE_CHECKING,
+    Any,
+    Callable,
+    Iterator,
+    List,
+    Optional,
+    Tuple,
+    Type,
+    TypeVar,
+    Union,
 )
 
 import requests
 from dropbox import (  # type: ignore
     Dropbox,
-    dropbox,
-    files,
-    users,
-    exceptions,
     async_,
     auth,
+    dropbox,
+    exceptions,
+    files,
     oauth,
+    users,
 )
 
 from . import __version__
-from .oauth import OAuth2Session
-from .errors import (
-    MaestralApiError,
-    SyncError,
-    InsufficientPermissionsError,
-    PathError,
-    FileReadError,
-    InsufficientSpaceError,
-    FileConflictError,
-    FolderConflictError,
-    ConflictError,
-    UnsupportedFileError,
-    RestrictedContentError,
-    NotFoundError,
-    NotAFolderError,
-    IsAFolderError,
-    FileSizeError,
-    OutOfMemoryError,
-    BadInputError,
-    DropboxAuthError,
-    TokenExpiredError,
-    TokenRevokedError,
-    CursorResetError,
-    DropboxServerError,
-    NoDropboxDirError,
-    InotifyError,
-    NotLinkedError,
-    InvalidDbidError,
-)
 from .config import MaestralState
 from .constants import DROPBOX_APP_KEY, IDLE
-from .utils import natural_size, chunks, clamp
+from .errors import (
+    BadInputError,
+    ConflictError,
+    CursorResetError,
+    DropboxAuthError,
+    DropboxServerError,
+    FileConflictError,
+    FileReadError,
+    FileSizeError,
+    FolderConflictError,
+    InotifyError,
+    InsufficientPermissionsError,
+    InsufficientSpaceError,
+    InvalidDbidError,
+    IsAFolderError,
+    MaestralApiError,
+    NoDropboxDirError,
+    NotAFolderError,
+    NotFoundError,
+    NotLinkedError,
+    OutOfMemoryError,
+    PathError,
+    RestrictedContentError,
+    SyncError,
+    TokenExpiredError,
+    TokenRevokedError,
+    UnsupportedFileError,
+)
+from .oauth import OAuth2Session
+from .utils import chunks, clamp, natural_size
 
 if TYPE_CHECKING:
     from .sync import SyncEvent

@@ -4,16 +4,16 @@ This class provides constants used throughout the maestral, the GUI and CLI. It 
 be kept free of memory heavy imports.
 """
 
-import sys
 import os
 import platform
+import sys
 from enum import Enum
 
 try:
-    from importlib.metadata import metadata, PackageNotFoundError  # type: ignore
+    from importlib.metadata import PackageNotFoundError, metadata  # type: ignore
 except ImportError:
     # Backwards compatibility Python 3.7 and lower
-    from importlib_metadata import metadata, PackageNotFoundError  # type: ignore
+    from importlib_metadata import PackageNotFoundError, metadata  # type: ignore
 try:
     from importlib.resources import files  # type: ignore
 except ImportError:

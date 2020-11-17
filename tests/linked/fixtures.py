@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 
-import os
 import logging
+import os
 import time
-from datetime import datetime
 import uuid
+from datetime import datetime
 from typing import Optional
 
-from dropbox.files import WriteMode, FileMetadata
-from maestral.main import Maestral
-from maestral.errors import NotFoundError, FileConflictError
-from maestral.client import convert_api_errors
-from maestral.utils.housekeeping import remove_configuration
-from maestral.utils.path import generate_cc_name, delete
-from maestral.utils.appdirs import get_home_dir
+from dropbox.files import FileMetadata, WriteMode
 
+from maestral.client import convert_api_errors
+from maestral.errors import FileConflictError, NotFoundError
+from maestral.main import Maestral
+from maestral.utils.appdirs import get_home_dir
+from maestral.utils.housekeeping import remove_configuration
+from maestral.utils.path import delete, generate_cc_name
 
 env_token = os.environ.get("DROPBOX_TOKEN", "")
 

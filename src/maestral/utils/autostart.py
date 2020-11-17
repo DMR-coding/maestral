@@ -10,27 +10,27 @@ provide no option to pass command line arguments to the app. They would therefor
 neither support pip installed packages or multiple configurations.
 """
 
+import configparser
 import os
 import os.path as osp
+import platform
+import plistlib
 import re
+import shlex
 import shutil
 import stat
-import platform
 import subprocess
-import shlex
-import plistlib
-import configparser
-from pathlib import Path
 from enum import Enum
-from typing import Optional, Dict, Any
+from pathlib import Path
+from typing import Any, Dict, Optional
 
 try:
-    from importlib.metadata import files, PackageNotFoundError  # type: ignore
+    from importlib.metadata import PackageNotFoundError, files  # type: ignore
 except ImportError:  # Python 3.7 and lower
     from importlib_metadata import files, PackageNotFoundError  # type: ignore
 
-from ..utils.appdirs import get_home_dir, get_conf_path, get_data_path
 from ..constants import BUNDLE_ID
+from ..utils.appdirs import get_conf_path, get_data_path, get_home_dir
 
 
 class SupportedImplementations(Enum):

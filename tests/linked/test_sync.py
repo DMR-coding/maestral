@@ -7,20 +7,25 @@
 """
 import os
 import os.path as osp
-import time
 import shutil
+import time
 import unittest
 from unittest import TestCase
 
 from dropbox.files import WriteMode
-from maestral.sync import FileCreatedEvent
-from maestral.sync import delete, move
-from maestral.sync import is_child, is_fs_case_sensitive
-from maestral.sync import DirectorySnapshot
+
 from maestral.errors import NotFoundError
+from maestral.sync import (
+    DirectorySnapshot,
+    FileCreatedEvent,
+    delete,
+    is_child,
+    is_fs_case_sensitive,
+    move,
+)
 from maestral.utils.path import to_existing_cased_path
 
-from .fixtures import setup_test_config, cleanup_test_config, DropboxTestLock
+from .fixtures import DropboxTestLock, cleanup_test_config, setup_test_config
 
 
 @unittest.skipUnless(os.environ.get("DROPBOX_TOKEN"), "Requires auth token")

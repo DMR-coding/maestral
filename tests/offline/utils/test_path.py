@@ -10,15 +10,15 @@ import tempfile
 
 import pytest
 
-from maestral.utils.path import (
-    path_exists_case_insensitive,
-    cased_path_candidates,
-    to_cased_path,
-    is_fs_case_sensitive,
-    is_child,
-    delete,
-)
 from maestral.utils.appdirs import get_home_dir
+from maestral.utils.path import (
+    cased_path_candidates,
+    delete,
+    is_child,
+    is_fs_case_sensitive,
+    path_exists_case_insensitive,
+    to_cased_path,
+)
 
 
 def test_path_exists_case_insensitive():

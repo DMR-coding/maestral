@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # system imports
-from setuptools import setup, find_packages  # type: ignore
-
+from setuptools import find_packages, setup  # type: ignore
 
 # proceed with actual install
 install_requires = [

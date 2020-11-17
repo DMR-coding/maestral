@@ -7,7 +7,7 @@ if platform.is_darwin():
     from .fsevents import OrderedFSEventsObserver as Observer
 elif platform.is_linux():
     try:
-        from watchdog.observers.inotify import InotifyObserver as Observer  # type: ignore
+        from watchdog.observers.inotify import InotifyObserver as Observer  # type: ignore  # isort:skip
     except UnsupportedLibc:
         from .polling import OrderedPollingObserver as Observer
 else:

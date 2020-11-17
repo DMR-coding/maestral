@@ -7,8 +7,8 @@ otherwise.
 """
 
 import logging
-from typing import Callable, Optional
 import platform
+from typing import Callable, Optional
 
 from .networkstate_base import NetworkConnectionNotifierBase
 

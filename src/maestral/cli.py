@@ -5,31 +5,30 @@ line. Some imports are deferred to the functions that required them in order to 
 the startup time of individual CLI commands.
 """
 
-import sys
+import functools
 import os
 import os.path as osp
-import functools
+import sys
 import textwrap
 import time
-from typing import Optional, List, Dict, Iterable, Callable, Union, TypeVar, cast
+from typing import Callable, Dict, Iterable, List, Optional, TypeVar, Union, cast
 
 import click
 import Pyro5.errors  # type: ignore
 
 from . import __version__
+from .config import MaestralConfig, MaestralState, list_configs
 from .daemon import (
+    MaestralProxy,
+    MaestralProxyType,
+    Start,
+    Stop,
+    is_running,
     start_maestral_daemon,
     start_maestral_daemon_process,
     stop_maestral_daemon_process,
-    Start,
-    Stop,
-    MaestralProxy,
-    MaestralProxyType,
-    is_running,
 )
-from .config import MaestralConfig, MaestralState, list_configs
 from .utils.housekeeping import remove_configuration, validate_config_name
-
 
 OK = click.style("[OK]", fg="green")
 FAILED = click.style("[FAILED]", fg="red")
@@ -500,8 +499,8 @@ def log():
 @config_option
 def gui(config_name: str) -> None:
 
-    from packaging.version import Version
     from packaging.requirements import Requirement
+    from packaging.version import Version
 
     try:
         from importlib.metadata import entry_points, requires, version  # type: ignore
@@ -800,6 +799,7 @@ def activity(config_name: str) -> None:
 
     import curses
     import time
+
     from .utils import natural_size
 
     try:
@@ -903,6 +903,7 @@ def activity(config_name: str) -> None:
 def ls(long: bool, dropbox_path: str, include_deleted: bool, config_name: str) -> None:
 
     from datetime import datetime
+
     from .utils import natural_size
 
     if not dropbox_path.startswith("/"):
@@ -1246,9 +1247,8 @@ def account_info(config_name: str) -> None:
 def about() -> None:
 
     import time
-    from . import __url__
-    from . import __author__
-    from . import __version__
+
+    from . import __author__, __url__, __version__
 
     year = time.localtime().tm_year
     click.echo("")

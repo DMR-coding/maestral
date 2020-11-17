@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-
 This module contains functions to retrieve platform dependent locations to store app
 data. It supports macOS and Linux.
-
 """
 
-# system imports
 import os
 import os.path as osp
 import platform
 from typing import Optional
 
-# local imports
 from ..config.base import (
     get_home_dir,
     get_conf_path,

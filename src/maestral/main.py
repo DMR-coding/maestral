@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
-"""
+"""This module defines the main API which is exposed to the CLI or GUI."""
 
-This module defines the main API which is exposed to the CLI or GUI.
-
-"""
-
-# system imports
 import sys
 import os
 import os.path as osp
@@ -25,7 +20,6 @@ except ImportError:
     # Python 3.7 and lower
     InvalidStateError = RuntimeError
 
-# external imports
 import requests
 from watchdog.events import DirDeletedEvent, FileDeletedEvent  # type: ignore
 import bugsnag  # type: ignore
@@ -38,7 +32,6 @@ try:
 except ImportError:
     journal = None
 
-# local imports
 from . import __version__
 from .client import DropboxClient, convert_api_errors
 from .sync import SyncMonitor, SyncDirection

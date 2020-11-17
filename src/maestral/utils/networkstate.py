@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-
 A module to receive notifications on network status changes. This will aim to use non-
 polling implementations (SCNetworkReachability on macOS and the
 org.freedesktop.NetworkManager Dbus services on Linux) and fall back to polling
 otherwise.
-
 """
+
 import logging
 from typing import Callable, Optional
 import platform

@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-
 This module defines base classes for desktop notifications. All platform implementations
 must inherit from :class:`DesktopNotifierBase`.
-
 """
 
-# system imports
 from enum import Enum
 from typing import Optional, Dict, Callable, Union
 

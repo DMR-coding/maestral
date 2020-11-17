@@ -1,22 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-
 This module contains functions to serialize class instances for communication between
 the daemon and frontends.
-
 """
 
-# system imports
 import json
 import traceback
 from enum import Enum
 from typing import Dict, Union, Any, Sequence
 
-# external imports
 from dropbox.stone_serializers import json_encode  # type: ignore
 from dropbox.stone_validators import Struct  # type: ignore
 
-# local imports
 from ..sync import SyncEvent
 
 

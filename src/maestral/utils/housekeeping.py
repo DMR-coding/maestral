@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
-"""
+"""This module contains migration code to run after an update."""
 
-This module contains migration code to run after an update.
-
-"""
-
-# system imports
 import os
 from typing import TypeVar
 
-# local imports
 from ..config import MaestralConfig, MaestralState
 from ..utils.appdirs import get_data_path, get_log_path
 from ..utils.path import delete

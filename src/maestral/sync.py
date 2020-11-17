@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
-"""
+"""This module contains the main syncing functionality."""
 
-This module contains the main syncing functionality.
-
-"""
-
-# system imports
 import os
 import os.path as osp
 from stat import S_ISDIR
@@ -42,7 +37,6 @@ from typing import (
 )
 from types import TracebackType
 
-# external imports
 import click
 import sqlalchemy.exc  # type: ignore
 import sqlalchemy.engine.url  # type: ignore
@@ -76,7 +70,6 @@ from watchdog.events import (
 )
 from watchdog.utils.dirsnapshot import DirectorySnapshot  # type: ignore
 
-# local imports
 from .config import MaestralConfig, MaestralState
 from .fsevents import Observer
 from .constants import (

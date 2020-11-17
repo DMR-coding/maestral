@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-
 Notification backend for macOS. Includes three implementations, in order of preference:
 
 1) UNUserNotificationCenter: Introduced in macOS 10.14 and cross-platform with iOS and
@@ -12,9 +11,8 @@ Notification backend for macOS. Includes three implementations, in order of pref
    Python or Maestral app. No callbacks when the user clicks on notification.
 
 The first two implementations require a running CFRunLoop to invoke callbacks.
-
 """
-# system imports
+
 import uuid
 import platform
 import subprocess
@@ -22,12 +20,10 @@ import shutil
 import logging
 from typing import Type, Optional, Dict, Tuple
 
-# external imports
 from packaging.version import Version
 from rubicon.objc import ObjCClass, objc_method, py_from_ns  # type: ignore
 from rubicon.objc.runtime import load_library, objc_id  # type: ignore
 
-# local imports
 from .notify_base import Notification, DesktopNotifierBase
 from ..constants import FROZEN
 

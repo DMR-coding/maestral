@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-
 This module contains the default configuration and state values and functions to return
 existing config or state instances for a specified config_name.
-
 """
 
 import copy
@@ -11,7 +9,7 @@ import logging
 import threading
 from typing import Dict
 
-from maestral import __version__
+from .. import __version__
 from .base import get_conf_path, get_data_path
 from .user import UserConfig, DefaultsType
 

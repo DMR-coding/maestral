@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-
 This module defines Maestral's error classes. It should be kept free of memory heavy
 imports.
 
@@ -11,7 +10,6 @@ Errors are divided into "fatal errors" which will prevent any syncing or "sync e
 which will only prevent syncing of an individual file or folder. Fatal errors can be for
 example revoked Dropbox authorization, a deleted local Dropbox folder, insufficient RAM,
 etc. Sync errors include invalid file names, too large file sizes, and many more.
-
 """
 
 from typing import Optional

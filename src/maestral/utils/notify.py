@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-
 This module handles desktop notifications for Maestral and supports multiple backends,
 depending on the platform.
-
 """
 
-# system imports
 import time
 import platform
 import logging
 from threading import Lock
 from typing import Optional, Dict, ClassVar, Callable
 
-# local imports
 from ..config import MaestralConfig
 from ..constants import APP_NAME, BUNDLE_ID, APP_ICON_PATH
 from .notify_base import DesktopNotifierBase, NotificationLevel, Notification

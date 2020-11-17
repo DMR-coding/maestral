@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-
 This module handles starting the maestral daemon on user login and supports multiple
 platform specific backends such as launchd or systemd.
 
@@ -9,10 +8,8 @@ a result, the user does not have a convenient UI to remove Maestral autostart en
 manually outside of Maestral itself. Login items however only support app bundles and
 provide no option to pass command line arguments to the app. They would therefore
 neither support pip installed packages or multiple configurations.
-
 """
 
-# system imports
 import os
 import os.path as osp
 import re
@@ -32,7 +29,6 @@ try:
 except ImportError:  # Python 3.7 and lower
     from importlib_metadata import files, PackageNotFoundError  # type: ignore
 
-# local imports
 from ..utils.appdirs import get_home_dir, get_conf_path, get_data_path
 from ..constants import BUNDLE_ID
 

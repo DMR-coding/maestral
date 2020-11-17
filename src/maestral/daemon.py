@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-
 This module defines functions to start and stop the sync daemon and retrieve proxy
 objects for a running daemon.
-
 """
 
-# system imports
 import sys
 import os
 import time
@@ -24,14 +21,12 @@ import warnings
 from typing import Optional, Any, Union, Tuple, Dict, Iterable, Type, TYPE_CHECKING
 from types import TracebackType, FrameType
 
-# external imports
 import Pyro5  # type: ignore
 from Pyro5.errors import CommunicationError  # type: ignore
 from Pyro5.api import Daemon, Proxy, expose, oneway, register_dict_to_class  # type: ignore
 import sdnotify  # type: ignore
 from fasteners import InterProcessLock  # type: ignore
 
-# local imports
 from .errors import SYNC_ERRORS, FATAL_ERRORS, MaestralApiError
 from .constants import IS_MACOS, FROZEN
 from .utils.appdirs import get_runtime_path

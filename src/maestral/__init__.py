@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-
 The following APIs should remain stable for frontends:
 
 * maestral.main.Maestral
@@ -9,7 +8,6 @@ The following APIs should remain stable for frontends:
 * maestral.errors
 * maestral.utils.appdirs
 * maestral.utils.autostart
-
 """
 
 __version__ = "1.3.0.dev0"

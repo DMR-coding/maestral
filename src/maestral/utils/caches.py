@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-"""
+"""Module containing cache implementations."""
 
-Module containing cache implementations.
-
-"""
 from collections import OrderedDict
 from threading import RLock
 from typing import Any

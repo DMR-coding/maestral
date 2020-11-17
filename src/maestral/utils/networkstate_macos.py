@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-
 Network state detection on macOS using the System Configuration framework.
 
 Parts of this code are taken from the Ubuntu Single Sign-On Python library under the
@@ -19,8 +18,8 @@ PURPOSE.  See the GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License along
 with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 """
+
 from ctypes import (
     POINTER,
     CFUNCTYPE,

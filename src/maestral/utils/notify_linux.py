@@ -1,22 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-
 Notification backend for Linux. Includes an implementation to send desktop notifications
 over Dbus. Responding to user interaction with a notification requires a running asyncio
 event loop.
-
 """
 
-# system imports
 import asyncio
 import logging
 from typing import Optional, Type, Coroutine
 
-# external imports
 from dbus_next import Variant  # type: ignore
 from dbus_next.aio import MessageBus, ProxyInterface  # type: ignore
 
-# local imports
 from .notify_base import Notification, DesktopNotifierBase, NotificationLevel
 
 

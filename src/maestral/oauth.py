@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-
 This module is responsible for authorization and token store in the system keyring.
-
 """
 
-# system imports
 import logging
 from threading import RLock
 from typing import Optional
 from datetime import datetime
 
-# external imports
 import click
 import keyring.backends  # type: ignore
 import keyring.backends.OS_X  # type: ignore
@@ -24,7 +20,6 @@ import keyrings.alt.file  # type: ignore
 import requests
 from dropbox.oauth import DropboxOAuth2FlowNoRedirect  # type: ignore
 
-# local imports
 from .config import MaestralConfig, MaestralState
 from .constants import DROPBOX_APP_KEY
 from .errors import KeyringAccessError

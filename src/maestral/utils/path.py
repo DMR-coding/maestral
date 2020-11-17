@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
-"""
+"""This module contains functions for common path operations used by Maestral."""
 
-This module contains functions for common path operations used by Maestral.
-
-"""
-
-# system imports
 import os
 import os.path as osp
 import shutil
 import itertools
 from typing import List, Optional, Tuple
 
-# local imports
 from .content_hasher import DropboxContentHasher
 
 

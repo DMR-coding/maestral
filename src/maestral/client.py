@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-
 This modules contains the Dropbox API client. It wraps calls to the Dropbox Python SDK
 and handles exceptions, chunked uploads or downloads, etc.
-
 """
 
-# system imports
 import errno
 import os
 import os.path as osp
@@ -28,7 +25,6 @@ from typing import (
     TYPE_CHECKING,
 )
 
-# external imports
 import requests
 from dropbox import (  # type: ignore
     Dropbox,
@@ -41,7 +37,6 @@ from dropbox import (  # type: ignore
     oauth,
 )
 
-# local imports
 from . import __version__
 from .oauth import OAuth2Session
 from .errors import (

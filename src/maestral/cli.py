@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-
 This file defines the functions to configure and interact with Maestral from the command
 line. Some imports are deferred to the functions that required them in order to reduce
 the startup time of individual CLI commands.
-
 """
 
-# system imports
 import sys
 import os
 import os.path as osp
@@ -16,11 +13,9 @@ import textwrap
 import time
 from typing import Optional, List, Dict, Iterable, Callable, Union, TypeVar, cast
 
-# external imports
 import click
 import Pyro5.errors  # type: ignore
 
-# local imports
 from . import __version__
 from .daemon import (
     start_maestral_daemon,
